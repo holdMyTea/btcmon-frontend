@@ -1,15 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { GET_SOURCES } from '../actions'
+import { fetchSources } from '../actions'
 import { connect } from 'react-redux'
 
-let SourceButton = ({ dispatch }) => (
+let SourceButton = ({ isGettingSources, onSourcesButtonClick }) => (
   <div>
     <button
       onClick={e => {
         e.preventDefault()
-        dispatch(GET_SOURCES)
+        onSourcesButtonClick()
       }}
+      disabled={isGettingSources}
     >
       SOOQA
     </button>
@@ -17,9 +18,25 @@ let SourceButton = ({ dispatch }) => (
 )
 
 SourceButton.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  isGettingSources: PropTypes.bool.isRequired,
+  onSourcesButtonClick: PropTypes.func.isRequired
 }
 
-SourceButton = connect()(SourceButton)
+const mapStateToProps = state => {
+  return {
+    isGettingSources: state.isGettingSources
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onSourcesButtonClick: () => dispatch(fetchSources())
+  }
+}
+
+SourceButton = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SourceButton)
 
 export default SourceButton
