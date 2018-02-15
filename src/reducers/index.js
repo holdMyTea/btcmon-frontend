@@ -1,6 +1,7 @@
 import {
   GET_SOURCES,
-  RECEIVE_SOURCES
+  RECEIVE_SOURCES,
+  SELECT_SOURCES
 } from '../actions'
 
 export default function (
@@ -21,6 +22,15 @@ export default function (
         isGettingSources: false,
         sources: action.sources,
         receivedAt: action.receivedAt
+      })
+
+    case SELECT_SOURCES:
+      return Object.assign({}, state, {
+        sources: state.sources.map(
+          source => source.id === action.id
+            ? {...source, isSelected: !source.isSelected}
+            : source
+        )
       })
 
     default: return state

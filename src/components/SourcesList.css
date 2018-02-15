@@ -1,0 +1,8 @@
+.selected-source {
+  color: black
+}
+
+.deselected-source {
+  color: lightgray;
+  text-decoration: linethrough;
+}

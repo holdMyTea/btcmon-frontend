@@ -16,6 +16,14 @@ function receiveSources (data) {
   }
 }
 
+export const SELECT_SOURCES = 'SELECT_SOURCES'
+export function selectSources (id) {
+  return {
+    type: SELECT_SOURCES,
+    id: id
+  }
+}
+
 export function fetchSources () {
   return function (dispatch) {
     dispatch(getSources())
@@ -29,8 +37,12 @@ export function fetchSources () {
       .then(
         json => {
           const sources = []
-          for (let source of json) {
-            sources.push(source.title)
+          for (let i = 0; i < json.length; i++) {
+            sources.push({
+              id: i,
+              name: json[i].title,
+              isSelected: false
+            })
           }
           dispatch(receiveSources(sources))
         }

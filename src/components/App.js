@@ -1,11 +1,9 @@
 import React from 'react'
-import SourcesButton from '../containers/SourcesButton'
-import SourcesList from '../containers/SourcesList'
+import Sources from '../containers/Sources'
 
 const App = () => (
   <div>
-    <SourcesButton />
-    <SourcesList />
+    <Sources />
   </div>
 )
 
