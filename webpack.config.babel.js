@@ -1,4 +1,5 @@
 import HTMLwebpackPlugin from 'html-webpack-plugin'
+import combineLoaders from 'webpack-combine-loaders'
 import path from 'path'
 
 export default {
@@ -12,15 +13,16 @@ export default {
       },
       {
         test: /\.css$/,
-        loader: 'style-loader'
-      },
-      {
-        test: /\.css$/,
-        loader: 'css-loader',
-        query: {
-          modules: true,
-          localIdentName: '[name]__[local]___[hash:base64:5]'
-        }
+        loader: combineLoaders([{
+          loader: 'style-loader'
+        },
+        {
+          loader: 'css-loader',
+          query: {
+            modules: true,
+            localIdentName: '[name]__[local]___[hash:base64:5]'
+          }
+        }])
       }
     ]
   },

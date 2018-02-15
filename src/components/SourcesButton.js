@@ -2,17 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 let SourceButton = ({ isGettingSources, onSourcesButtonClick }) => (
-  <div>
-    <button
-      onClick={e => {
-        e.preventDefault()
-        onSourcesButtonClick()
-      }}
-      disabled={isGettingSources}
-    >
-      SOOQA
-    </button>
-  </div>
+  <button
+    onClick={e => {
+      e.preventDefault()
+      onSourcesButtonClick()
+    }}
+    disabled={isGettingSources}
+  >
+    SOOQA
+  </button>
 )
 
 SourceButton.propTypes = {
