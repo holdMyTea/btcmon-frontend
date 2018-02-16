@@ -1,4 +1,4 @@
-import fetch from 'cross-fetch'
+import axios from 'axios'
 
 export const GET_SOURCES = 'GET_SOURCES'
 function getSources () {
@@ -29,22 +29,15 @@ export function fetchSources () {
     dispatch(getSources())
 
     // TODO: use axios instead
-    return fetch('https://jsonplaceholder.typicode.com/posts')
+    return axios.get('http://localhost:8080/sources')
       .then(
         response => response.json(),
         error => console.log('God dammit', error)
       )
       .then(
         json => {
-          const sources = []
-          for (let i = 0; i < json.length; i++) {
-            sources.push({
-              id: i,
-              name: json[i].title,
-              isSelected: false
-            })
-          }
-          dispatch(receiveSources(sources))
+          console.log('json: ' + json)
+          dispatch(receiveSources(json))
         }
       )
   }
