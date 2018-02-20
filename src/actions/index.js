@@ -8,10 +8,10 @@ function getSources () {
 }
 
 export const RECEIVE_SOURCES = 'RECEIVE_SOURCES'
-function receiveSources (data) {
+function receiveSources (sources) {
   return {
     type: RECEIVE_SOURCES,
-    sources: data,
+    sources: sources,
     receivedAt: Date.now()
   }
 }
@@ -31,14 +31,20 @@ export function fetchSources () {
     // TODO: use axios instead
     return axios.get('http://localhost:8080/sources')
       .then(
-        response => response.json(),
+        response => {
+          const sources = []
+
+          for (let i = 0; i < response.data.sources.length; i++) {
+            sources.push({
+              id: i,
+              name: response.data.sources[i],
+              isSelected: false
+            })
+          }
+
+          dispatch(receiveSources(sources))
+        },
         error => console.log('God dammit', error)
-      )
-      .then(
-        json => {
-          console.log('json: ' + json)
-          dispatch(receiveSources(json))
-        }
       )
   }
 }
