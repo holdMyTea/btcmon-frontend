@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import styles from './SourcesList.css'
 
-let SourceList = function ({ sources, onSourceClick }) {
+let SourceList = function ({ sources, onSourceClick, isGettingSources }) {
   let component
 
   if (sources[0]) {
@@ -18,6 +18,9 @@ let SourceList = function ({ sources, onSourceClick }) {
       <ul>
         {list}
       </ul>)
+  } else if (isGettingSources) {
+    component =
+      (<h3>Loading...</h3>)
   } else {
     component =
       (<h3>No sources yet</h3>)
