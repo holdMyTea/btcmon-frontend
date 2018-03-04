@@ -1,4 +1,4 @@
-import { fetchSources, selectSources } from '../actions'
+import { fetchSources, selectSources } from '../actions/sources'
 import { connect } from 'react-redux'
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -12,7 +12,7 @@ class Sources extends React.Component {
 
   render () {
     return (
-      <SourcesList sources={this.props.sources} onSourceClick={this.props.onSourceClick}
+      <SourcesList list={this.props.list} onSourceClick={this.props.onSourceClick}
         isGettingSources={this.props.isGettingSources}
       />
     )
@@ -21,8 +21,8 @@ class Sources extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    isGettingSources: state.isGettingSources,
-    sources: state.sources
+    isGettingSources: state.sources.isGettingSources,
+    list: state.sources.list
   }
 }
 
@@ -35,7 +35,7 @@ const mapDispatchToProps = dispatch => {
 
 Sources.propTypes = {
   isGettingSources: PropTypes.bool.isRequired,
-  sources: PropTypes.arrayOf(
+  list: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,

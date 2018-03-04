@@ -3,11 +3,14 @@ import PropTypes from 'prop-types'
 
 import styles from './SourcesList.css'
 
-let SourceList = function ({ sources, onSourceClick, isGettingSources }) {
+let SourceList = function ({ list, onSourceClick, isGettingSources }) {
   let component
 
-  if (sources[0]) {
-    const list = sources.map(source => (
+  if (isGettingSources) {
+    component =
+      (<h3>Loading...</h3>)
+  } else if (list[0]) {
+    const items = list.map(source => (
       <li key={source.id}
         onClick={() => onSourceClick(source.id)}
         className={source.isSelected ? styles['selected-source'] : styles['deselected-source']}
@@ -16,11 +19,8 @@ let SourceList = function ({ sources, onSourceClick, isGettingSources }) {
 
     component = (
       <ul>
-        {list}
+        {items}
       </ul>)
-  } else if (isGettingSources) {
-    component =
-      (<h3>Loading...</h3>)
   } else {
     component =
       (<h3>No sources yet</h3>)
@@ -30,7 +30,7 @@ let SourceList = function ({ sources, onSourceClick, isGettingSources }) {
 }
 
 SourceList.propTypes = {
-  sources: PropTypes.arrayOf(
+  list: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,

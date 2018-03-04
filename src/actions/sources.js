@@ -28,7 +28,6 @@ export function fetchSources () {
   return function (dispatch) {
     dispatch(getSources())
 
-    // TODO: use axios instead
     return axios.get('http://localhost:8080/sources')
       .then(
         response => {
