@@ -18,11 +18,11 @@ export default function (
       })
 
     case RECEIVE_SOURCES:
-      return Object.assign({}, state, {
+      return {
         isGettingSources: false,
         list: action.sources,
         receivedAt: action.receivedAt
-      })
+      }
 
     case SELECT_SOURCES:
       return Object.assign({}, state, {

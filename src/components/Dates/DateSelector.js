@@ -8,14 +8,14 @@ let DateSelector = function ({ date, onDateChange }) {
   const selected = moment(date)
   const now = moment()
 
-  const years = [selected.year(), selected.year() - 1].map(e => String(e))
+  const years = [now.year(), now.year() - 1].map(e => String(e))
 
   const months = selected.isBefore(now, 'year')
     ? moment.months()
     : moment.months().slice(0, now.month() + 1)
 
   const days = selected.isBefore(now, 'month')
-    ? Array(now.clone().endOf('month').date()).fill().map((v, i) => String(i + 1)) // that clone() was painfull to figure out
+    ? Array(selected.clone().endOf('month').date()).fill().map((v, i) => String(i + 1)) // that clone() was painfull to figure out
     : Array(now.date()).fill().map((v, i) => String(i + 1))
 
   return (

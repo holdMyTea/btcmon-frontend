@@ -1,8 +1,8 @@
-import { fetchSources, selectSources } from '../actions/sources'
 import { connect } from 'react-redux'
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { fetchSources, selectSources } from '../actions/sources'
 import SourcesList from '../components/SourcesList'
 
 class Sources extends React.Component {

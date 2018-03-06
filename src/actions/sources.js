@@ -3,7 +3,7 @@ import axios from 'axios'
 export const GET_SOURCES = 'GET_SOURCES'
 function getSources () {
   return {
-    type: 'GET_SOURCES'
+    type: GET_SOURCES
   }
 }
 
@@ -37,7 +37,7 @@ export function fetchSources () {
             sources.push({
               id: i,
               name: response.data.sources[i],
-              isSelected: false
+              isSelected: true
             })
           }
 

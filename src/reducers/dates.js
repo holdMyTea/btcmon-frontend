@@ -5,7 +5,7 @@ import {
 } from '../actions/dates'
 
 function straightTime (date1, date2) {
-  return moment(date1).isAfter(date2)
+  const dateline = moment(date1).isAfter(date2)
     ? {
       startDate: date2,
       endDate: date1
@@ -14,6 +14,11 @@ function straightTime (date1, date2) {
       startDate: date1,
       endDate: date2
     }
+
+  dateline.startDate = moment(dateline.startDate).hour(0).minute(0).second(0).format()
+  dateline.endDate = moment(dateline.endDate).hour(23).minute(59).second(59).format()
+
+  return dateline
 }
 
 export default function (
