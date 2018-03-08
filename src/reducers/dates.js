@@ -30,10 +30,10 @@ export default function (
 ) {
   switch (action.type) {
     case SET_START_DATE:
-      return Object.assign({}, state, straightTime(action.date, state.endDate))
+      return straightTime(action.date, state.endDate)
 
     case SET_END_DATE:
-      return Object.assign({}, state, straightTime(action.date, state.startDate))
+      return straightTime(action.date, state.startDate)
 
     default: return state
   }

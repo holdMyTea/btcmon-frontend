@@ -13,9 +13,7 @@ export default function (
 ) {
   switch (action.type) {
     case GET_SOURCES:
-      return Object.assign({}, state, {
-        isGettingSources: true
-      })
+      return {...state, isGettingSources: true}
 
     case RECEIVE_SOURCES:
       return {
@@ -25,13 +23,13 @@ export default function (
       }
 
     case SELECT_SOURCES:
-      return Object.assign({}, state, {
+      return {...state,
         list: state.list.map(
           source => source.id === action.id
             ? {...source, isSelected: !source.isSelected}
             : source
         )
-      })
+      }
 
     default: return state
   }

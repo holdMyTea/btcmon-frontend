@@ -13,9 +13,7 @@ export default function (
 ) {
   switch (action.type) {
     case GET_DATA:
-      return Object.assign({}, state, {
-        isGettingData: true
-      })
+      return {...state, isGettingData: true}
 
     case RECEIVE_DATA:
       return {

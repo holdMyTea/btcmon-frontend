@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-function DataElement ({ data, name }) {
+const DataElement = ({ data, name }) => {
   return (
     <div>
       <h4>{name}</h4>

@@ -12,29 +12,23 @@ class Data extends React.Component {
   }
 
   render () {
-    if (this.props.isGettingSources) {
-      return (<h3>Waiting for the sources update</h3>)
-    } else if (this.props.isGettingData) {
-      return (<h3>Waiting for the data</h3>)
-    } else if (this.props.selectedSources.length === 0) {
-      return (<h3>No sources selected</h3>)
-    } else {
-      return (
-        <div>
-          {this.props.data.map(
-            source => (<DataElement data={source.data} key={source.name}
-              name={source.name} />)
-          )}
-        </div>
-      )
-    }
+    return this.props.isGettingSources ? (<h3>Waiting for the sources update</h3>)
+      : this.props.isGettingData ? (<h3>Waiting for the data</h3>)
+        : this.props.selectedSources.length === 0 ? (<h3>No sources selected</h3>)
+          : (
+            <div>
+              {this.props.data.map(
+                source => (<DataElement data={source.data} key={source.name}
+                  name={source.name} />)
+              )}
+            </div>
+          )
   }
 
   checkForUpdates () {
     if (
       (this.props.isGettingData || this.props.isGettingSources) ||
       (this.props.selectedSources === 0) ||
-      // (Object.keys(this.props.dataActualFor).length !== 0) ||
       (
         (this.props.startDate === this.props.dataActualFor.startDate) &&
         (this.props.endDate === this.props.dataActualFor.endDate) &&

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import DateElement from './DateElement'
 
-let DateSelector = function ({ date, onDateChange }) {
+const DateSelector = ({ date, onDateChange }) => {
   const selected = moment(date)
   const now = moment()
 
@@ -33,7 +33,7 @@ let DateSelector = function ({ date, onDateChange }) {
   )
 }
 
-const onChange = function (setMethod, currentDate, onDateChange) {
+const onChange = (setMethod, currentDate, onDateChange) => {
   return function (newValue) {
     const newDate = currentDate.clone()[setMethod](newValue)
     onDateChange(newDate.format())

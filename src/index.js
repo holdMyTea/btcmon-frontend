@@ -10,7 +10,7 @@ import App from './components/App.js'
 
 const loggerMiddleware = createLogger()
 
-let store = createStore(
+const store = createStore(
   reducers,
   applyMiddleware(
     thunkMiddleware,

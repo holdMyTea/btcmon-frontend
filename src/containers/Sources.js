@@ -3,7 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { fetchSources, selectSources } from '../actions/sources'
-import SourcesList from '../components/SourcesList'
+import SourcesList from '../components/Sources/SourcesList'
 
 class Sources extends React.Component {
   componentDidMount () {
