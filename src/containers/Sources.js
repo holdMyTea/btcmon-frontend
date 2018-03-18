@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { fetchSources, selectSources } from '../actions/sources'
+import { getSources, selectSources } from '../actions/sources'
 import SourcesList from '../components/Sources/SourcesList'
 
 class Sources extends React.Component {
@@ -13,7 +13,7 @@ class Sources extends React.Component {
   render () {
     return (
       <SourcesList list={this.props.list} onSourceClick={this.props.onSourceClick}
-        isGettingSources={this.props.isGettingSources}
+        isGettingSources={this.props.isGettingSources} sourcesFailure={this.props.sourcesFailure}
       />
     )
   }
@@ -22,13 +22,14 @@ class Sources extends React.Component {
 const mapStateToProps = state => {
   return {
     isGettingSources: state.sources.isGettingSources,
+    sourcesFailure: state.sources.sourcesFailure,
     list: state.sources.list
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSourcesDidMount: () => dispatch(fetchSources()),
+    onSourcesDidMount: () => dispatch(getSources()),
     onSourceClick: (id) => dispatch(selectSources(id))
   }
 }
@@ -43,7 +44,8 @@ Sources.propTypes = {
     })
   ).isRequired,
   onSourceClick: PropTypes.func.isRequired,
-  onSourcesDidMount: PropTypes.func.isRequired
+  onSourcesDidMount: PropTypes.func.isRequired,
+  sourcesFailure: PropTypes.bool.isRequired
 }
 
 export default connect(

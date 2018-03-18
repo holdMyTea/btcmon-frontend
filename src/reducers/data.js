@@ -1,11 +1,14 @@
+import moment from 'moment'
 import {
   GET_DATA,
-  RECEIVE_DATA
+  GET_DATA_SUCCESS,
+  GET_DATA_FAILURE
 } from '../actions/data'
 
 export default function (
   state = {
     isGettingData: false,
+    dataFailure: false,
     list: [],
     actualFor: {}
   },
@@ -15,16 +18,20 @@ export default function (
     case GET_DATA:
       return {...state, isGettingData: true}
 
-    case RECEIVE_DATA:
+    case GET_DATA_SUCCESS:
       return {
         isGettingData: false,
-        list: action.data,
+        dataFailure: false,
+        list: action.payload.data,
         actualFor: {
-          startDate: action.startDate,
-          endDate: action.endDate,
-          sources: action.sources
+          startDate: moment(Number(action.payload.startDate)).format(),
+          endDate: moment(Number(action.payload.endDate)).format(),
+          sources: action.payload.sources
         }
       }
+
+    case GET_DATA_FAILURE:
+      return {...state, sourcesFailure: true}
 
     default: return state
   }

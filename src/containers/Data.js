@@ -3,7 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 
-import { fetchData } from '../actions/data'
+import { getData } from '../actions/data'
 import DataElement from '../components/Data/DataElement'
 
 class Data extends React.Component {
@@ -14,15 +14,17 @@ class Data extends React.Component {
   render () {
     return this.props.isGettingSources ? (<h3>Waiting for the sources update</h3>)
       : this.props.isGettingData ? (<h3>Waiting for the data</h3>)
-        : this.props.selectedSources.length === 0 ? (<h3>No sources selected</h3>)
-          : (
-            <div>
-              {this.props.data.map(
-                source => (<DataElement data={source.data} key={source.name}
-                  name={source.name} />)
-              )}
-            </div>
-          )
+        : this.props.sourcesFailure ? (<h3>Failed to get sources</h3>)
+          : this.props.dataFailure ? (<h3>Failed to get data</h3>)
+            : this.props.selectedSources.length === 0 ? (<h3>No sources selected</h3>)
+              : (
+                <div>
+                  {this.props.data.map(
+                    source => (<DataElement data={source.data} key={source.name}
+                      name={source.name} />)
+                  )}
+                </div>
+              )
   }
 
   checkForUpdates () {
@@ -55,7 +57,9 @@ const mapStateToProps = state => {
 
   return {
     isGettingSources: state.sources.isGettingSources,
+    sourcesFailure: state.sources.sourcesFailure,
     isGettingData: state.data.isGettingData,
+    dataFailure: state.data.dataFailure,
     dataActualFor: state.data.actualFor,
     data: state.data.list.filter(dataset =>
       selectedSources.includes(dataset.name)
@@ -69,14 +73,16 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onDataUpdate: (startDate, endDate, sources) => dispatch(
-      fetchData(startDate, endDate, sources)
+      getData(startDate, endDate, sources)
     )
   }
 }
 
 Data.propTypes = {
   isGettingSources: PropTypes.bool.isRequired,
+  sourcesFailure: PropTypes.bool.isRequired,
   isGettingData: PropTypes.bool.isRequired,
+  dataFailure: PropTypes.bool.isRequired,
   startDate: PropTypes.string.isRequired,
   endDate: PropTypes.string.isRequired,
   selectedSources: PropTypes.arrayOf(
