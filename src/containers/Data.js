@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 
 import { getData } from '../actions/data'
-import DataElement from '../components/Data/DataElement'
+import DataGraph from '../components/Data/DataGraph'
 
 class Data extends React.Component {
   componentDidUpdate (prevProps, prevState) {
@@ -12,19 +12,14 @@ class Data extends React.Component {
   }
 
   render () {
-    return this.props.isGettingSources ? (<h3>Waiting for the sources update</h3>)
-      : this.props.isGettingData ? (<h3>Waiting for the data</h3>)
-        : this.props.sourcesFailure ? (<h3>Failed to get sources</h3>)
-          : this.props.dataFailure ? (<h3>Failed to get data</h3>)
-            : this.props.selectedSources.length === 0 ? (<h3>No sources selected</h3>)
-              : (
-                <div>
-                  {this.props.data.map(
-                    source => (<DataElement data={source.data} key={source.name}
-                      name={source.name} />)
-                  )}
-                </div>
-              )
+    return (
+      <DataGraph isGettingSources={this.props.isGettingSources}
+        isGettingData={this.props.isGettingData}
+        sourcesFailure={this.props.sourcesFailure}
+        dataFailure={this.props.dataFailure}
+        selectedSources={this.props.selectedSources}
+        data={this.props.data} />
+    )
   }
 
   checkForUpdates () {
@@ -40,13 +35,15 @@ class Data extends React.Component {
           )
         )
       )
-    ) return
-
-    this.props.onDataUpdate(
-      moment(this.props.startDate).valueOf(),
-      moment(this.props.endDate).valueOf(),
-      this.props.selectedSources
-    )
+    ) {
+      return
+    } else {
+      this.props.onDataUpdate(
+        moment(this.props.startDate).valueOf(),
+        moment(this.props.endDate).valueOf(),
+        this.props.selectedSources
+      )
+    }
   }
 }
 
