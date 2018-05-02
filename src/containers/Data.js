@@ -24,20 +24,20 @@ class Data extends React.Component {
 
   checkForUpdates () {
     if (
-      (this.props.isGettingData || this.props.isGettingSources) ||
-      (this.props.selectedSources === 0) ||
-      (
-        (this.props.startDate === this.props.dataActualFor.startDate) &&
-        (this.props.endDate === this.props.dataActualFor.endDate) &&
+      !(
+        (this.props.isGettingData || this.props.isGettingSources) ||
+        (this.props.selectedSources === 0) ||
         (
-          this.props.selectedSources.every(
-            source => this.props.dataActualFor.sources.includes(source)
+          (this.props.startDate === this.props.dataActualFor.startDate) &&
+          (this.props.endDate === this.props.dataActualFor.endDate) &&
+          (
+            this.props.selectedSources.every(
+              source => this.props.dataActualFor.sources.includes(source)
+            )
           )
         )
       )
     ) {
-      return
-    } else {
       this.props.onDataUpdate(
         moment(this.props.startDate).valueOf(),
         moment(this.props.endDate).valueOf(),
