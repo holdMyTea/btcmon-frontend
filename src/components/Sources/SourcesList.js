@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import styles from './SourcesList.css'
-
 const SourceList = ({ list, onSourceClick, isGettingSources, sourcesFailure }) => {
   return isGettingSources ? (<h3>Loading...</h3>)
     : sourcesFailure ? (<h3>Unable to get sources</h3>)
@@ -11,7 +9,7 @@ const SourceList = ({ list, onSourceClick, isGettingSources, sourcesFailure }) =
           list.map(source => (
             <li key={source.id}
               onClick={() => onSourceClick(source.id)}
-              className={source.isSelected ? styles['selected-source'] : styles['deselected-source']}
+              className={source.isSelected ? ['selected-source'] : ['deselected-source']}
             >{source.name}</li>
           ))}
         </ul>) : (<h3>No sources yet</h3>)

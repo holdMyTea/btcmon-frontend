@@ -8,10 +8,10 @@ import DateSelector from '../components/Dates/DateSelector'
 class Dates extends React.Component {
   render () {
     return (
-      <div>
-        <h5 style={{marginBottom: 4 + 'px'}}>Start date:</h5>
+      <div className='dates'>
+        <h5 className='dates-header'>Start date:</h5>
         <DateSelector date={this.props.startDate} onDateChange={this.props.onStartDateChange}/>
-        <h5 style={{marginBottom: 4 + 'px'}}>End date:</h5>
+        <h5 className='dates-header'>End date:</h5>
         <DateSelector date={this.props.endDate} onDateChange={this.props.onEndDateChange}/>
       </div>
     )

@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+}
+
+.app {
+  display: flex;
+  flex-direction: row;
+}
+
+.left-column {
+  flex: 1 1 30%;
+}
+
+.right-column {
+  flex: 3 1 70%;
+}
+
+.dates-header {
+  margin-bottom: 4px;
+}
+
+.selected-source {
+  color: black;
+}
+
+.deselected-source {
+  color: lightgray;
+  text-decoration: line-through;
+}

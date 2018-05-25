@@ -20,7 +20,7 @@
     "redux-logger": "^3.0.6"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
+    "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-plugin-recharts": "^1.1.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
