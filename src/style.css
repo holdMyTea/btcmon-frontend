@@ -5,14 +5,26 @@
 .app {
   display: flex;
   flex-direction: row;
+  background: rebeccapurple;
 }
 
 .left-column {
-  flex: 1 1 30%;
+  flex: 1 1 20%;
 }
 
 .right-column {
-  flex: 3 1 70%;
+  flex: 4 1 80%;
+}
+
+.left-column, .right-column {
+  margin: 10px;
+  padding: 5px;
+  background: white;
+}
+
+.left-column>ul {
+  padding: 15px;
+  margin: 0;
 }
 
 .dates-header {
