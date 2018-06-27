@@ -51,8 +51,8 @@ class DataGraph extends React.Component {
     for (let i = 0; i < data.reduce((acc, val) => Math.min(acc, val.data.length), Infinity); i++) {
       const element = {
         timestamp: moment(
-          data.reduce((acc, val) =>
-            (acc += moment(val.data[i].timestamp).unix()), 0
+          data.reduce(
+            (acc, val) => (acc += moment(val.data[i].timestamp).unix()), 0
           ) / data.length).format()
       }
 

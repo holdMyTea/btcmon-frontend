@@ -22,7 +22,7 @@
   background: white;
 }
 
-.left-column>ul {
+.left-column > ul {
   padding: 15px;
   margin: 0;
 }
@@ -38,4 +38,19 @@
 .deselected-source {
   color: lightgray;
   text-decoration: line-through;
+}
+
+footer {
+  margin: 10px;
+}
+
+footer > a > svg {
+  display: block;
+  margin: auto;
+  fill: rebeccapurple;
+}
+
+header {
+  margin: 10px;
+  padding-left: 10%;
 }
