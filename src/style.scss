@@ -6,3 +6,19 @@
     color: blue;
   }
 }
+
+header {
+  h2 {
+    color: blue;
+  }
+}
+
+footer {
+  a { 
+    svg {
+      display: block;
+      margin: auto;
+      fill: rebeccapurple;
+    }
+  }
+}

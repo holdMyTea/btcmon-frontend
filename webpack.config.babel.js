@@ -1,4 +1,4 @@
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
+
 import HtmlPlugin from 'html-webpack-plugin'
 import path from 'path'
 
@@ -18,22 +18,15 @@ export default {
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader']
-        })
+        use: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
   },
   plugins: [
-    new ExtractTextPlugin({
-      filename: 'style.css',
-      allChunks: true
+    new HtmlPlugin({
+      template: path.join(__dirname, '/public/index.html'),
+      filename: 'index.html',
+      inject: 'body'
     })
-    // ,
-    // new HtmlPlugin({
-    //   template: './public/index.html',
-    //   inject: 'body'
-    // })
   ]
 }
