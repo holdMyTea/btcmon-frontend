@@ -5,7 +5,7 @@ const SourceList = ({ list, onSourceClick, isGettingSources, sourcesFailure }) =
   return isGettingSources ? (<h3>Loading...</h3>)
     : sourcesFailure ? (<h3>Unable to get sources</h3>)
       : list[0] ? (
-        <ul>{
+        <ul className='sources-list'>{
           list.map(source => (
             <li key={source.id}
               onClick={() => onSourceClick(source.id)}

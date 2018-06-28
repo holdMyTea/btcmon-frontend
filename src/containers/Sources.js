@@ -12,9 +12,11 @@ class Sources extends React.Component {
 
   render () {
     return (
-      <SourcesList list={this.props.list} onSourceClick={this.props.onSourceClick}
-        isGettingSources={this.props.isGettingSources} sourcesFailure={this.props.sourcesFailure}
-      />
+      <div className='sources'>
+        <SourcesList list={this.props.list} onSourceClick={this.props.onSourceClick}
+          isGettingSources={this.props.isGettingSources} sourcesFailure={this.props.sourcesFailure}
+        />
+      </div>
     )
   }
 }
