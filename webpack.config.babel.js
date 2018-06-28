@@ -1,5 +1,5 @@
-
 import HtmlPlugin from 'html-webpack-plugin'
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import path from 'path'
 
 export default {
@@ -18,11 +18,15 @@ export default {
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        })
       }
     ]
   },
   plugins: [
+    new ExtractTextPlugin('styles.css'),
     new HtmlPlugin({
       template: path.join(__dirname, '/public/index.html'),
       filename: 'index.html',
