@@ -1,5 +1,5 @@
 import React from 'react'
-import { LineChart, YAxis, Line } from 'recharts'
+import { LineChart, XAxis, YAxis, Line } from 'recharts'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 
@@ -28,35 +28,56 @@ class DataGraph extends React.Component {
         : this.props.sourcesFailure ? (<h3>Failed to get sources</h3>)
           : this.props.dataFailure ? (<h3>Failed to get data</h3>)
             : this.props.selectedSources.length === 0 ? (<h3>No sources selected</h3>)
-              : (
-                <LineChart width={this.state.width * 0.75}
-                  height={this.state.height * 0.5}
-                  data={this.formatData(this.props.data)}>
-
-                  <YAxis type="number" domain={this.computeDomain(this.props.data)} width={100} />
-                  {
-                    this.props.selectedSources.map(
-                      source =>
-                        (<Line dataKey={source} key={source} type="monotone"/>)
-                    )
-                  }
-
-                </LineChart>
-              )
+              : this.buildGraph()
   }
 
-  formatData (data) {
+  buildGraph () {
+    const formattedData = this.formatData(this.props.data)
+
+    return (
+      <LineChart width={this.state.width * 0.75}
+        height={this.state.height * 0.8}
+        data={formattedData}>
+
+        {/* <XAxis type="number" height={100} tickFormatter={this.formatXAxis}/> */}
+        <YAxis type="number" width={100} tickFormatter={this.formatYAxis}
+          domain={['dataMin * 0.95', 'dataMax * 1.05']}
+        />
+
+        {
+          this.props.selectedSources.map(
+            source =>
+              (<Line dataKey={source} key={source} type="monotone"/>)
+          )
+        }
+
+      </LineChart>
+    )
+  }
+
+  /**
+   * Formats received data for recharts.
+   * Transforms array of Souce objects, holding timestamp-value pair into one array with single timestamp
+   * value and corresponding price for each Source.
+   * @param {Array<Object>} rawData Array of Souce objects, holding timestamp-value pair
+   * @param {String} rawData[].name Name of the source
+   * @param {Object[]} rawData[].data Actual Source's dataset
+   * @param {String} rawData[].data[].timestamp JS Date string value was valid for
+   * @param {Number} rawData[].data[].value Price value
+   * @returns {Array<Object>} Array with single timestamp and corresponding values for each Source.
+   */
+  formatData (rawData) {
     const formattedData = []
 
-    for (let i = 0; i < data.reduce((acc, val) => Math.min(acc, val.data.length), Infinity); i++) {
+    for (let i = 0; i < rawData.reduce((acc, val) => Math.min(acc, val.data.length), Infinity); i++) {
       const element = {
         timestamp: moment(
-          data.reduce(
+          rawData.reduce(
             (acc, val) => (acc += moment(val.data[i].timestamp).unix()), 0
-          ) / data.length).format()
+          ) / rawData.length).format()
       }
 
-      data.forEach(source => (
+      rawData.forEach(source => (
         element[source.name] = source.data[i].value
       ))
 
@@ -66,20 +87,12 @@ class DataGraph extends React.Component {
     return formattedData
   }
 
-  computeDomain (data) {
-    let min = Infinity
-    let max = -Infinity
+  formatXAxis (tickItem) {
+    return moment.unix(tickItem).format('M/D/YY HH:mm')
+  }
 
-    data.forEach(source => {
-      source.data.forEach(e => {
-        min = Math.min(min, e.value)
-        max = Math.max(max, e.value)
-      })
-    })
-
-    const diff = (max - min) * 0.05
-
-    return [min - diff, max + diff]
+  formatYAxis (tickItem) {
+    return tickItem.toFixed(2)
   }
 
   updateWindowDimensions () {
