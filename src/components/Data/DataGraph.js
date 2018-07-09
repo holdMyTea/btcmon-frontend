@@ -1,5 +1,5 @@
 import React from 'react'
-import { LineChart, XAxis, YAxis, Line } from 'recharts'
+import {LineChart} from 'react-easy-chart'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 
@@ -32,67 +32,30 @@ class DataGraph extends React.Component {
   }
 
   buildGraph () {
-    const formattedData = this.formatData(this.props.data)
-
     return (
-      <LineChart width={this.state.width * 0.75}
-        height={this.state.height * 0.8}
-        data={formattedData}>
-
-        {/* <XAxis type="number" height={100} tickFormatter={this.formatXAxis}/> */}
-        <YAxis type="number" width={100} tickFormatter={this.formatYAxis}
-          domain={['dataMin * 0.95', 'dataMax * 1.05']}
-        />
-
-        {
-          this.props.selectedSources.map(
-            source =>
-              (<Line dataKey={source} key={source} type="monotone"/>)
-          )
-        }
-
-      </LineChart>
+      <LineChart axes
+        xType={'time'}
+        data={this.formatData(this.props.data)}
+        width={750}
+        height={500}
+        datePattern={'%d/%m %H:%M'}
+      />
     )
   }
 
-  /**
-   * Formats received data for recharts.
-   * Transforms array of Souce objects, holding timestamp-value pair into one array with single timestamp
-   * value and corresponding price for each Source.
-   * @param {Array<Object>} rawData Array of Souce objects, holding timestamp-value pair
-   * @param {String} rawData[].name Name of the source
-   * @param {Object[]} rawData[].data Actual Source's dataset
-   * @param {String} rawData[].data[].timestamp JS Date string value was valid for
-   * @param {Number} rawData[].data[].value Price value
-   * @returns {Array<Object>} Array with single timestamp and corresponding values for each Source.
-   */
   formatData (rawData) {
     const formattedData = []
 
-    for (let i = 0; i < rawData.reduce((acc, val) => Math.min(acc, val.data.length), Infinity); i++) {
-      const element = {
-        timestamp: moment(
-          rawData.reduce(
-            (acc, val) => (acc += moment(val.data[i].timestamp).unix()), 0
-          ) / rawData.length).format()
-      }
-
-      rawData.forEach(source => (
-        element[source.name] = source.data[i].value
-      ))
-
-      formattedData.push(element)
-    }
+    rawData.forEach(source => {
+      formattedData.push(
+        source.data.map(record => ({
+          x: moment(record.timestamp).format('DD/MM HH:mm'),
+          y: record.value
+        }))
+      )
+    })
 
     return formattedData
-  }
-
-  formatXAxis (tickItem) {
-    return moment.unix(tickItem).format('M/D/YY HH:mm')
-  }
-
-  formatYAxis (tickItem) {
-    return tickItem.toFixed(2)
   }
 
   updateWindowDimensions () {
