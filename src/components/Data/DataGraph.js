@@ -3,14 +3,21 @@ import {LineChart} from 'react-easy-chart'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 
+import ToolTip from './Tooltip'
+
 class DataGraph extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       width: 0,
-      height: 0
+      height: 0,
+      tooltip: {
+        show: false
+      }
     }
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
+    this.mouseOverHandler = this.mouseOverHandler.bind(this)
+    this.mouseOutHandler = this.mouseOutHandler.bind(this)
   }
 
   componentDidMount () {
@@ -33,14 +40,54 @@ class DataGraph extends React.Component {
 
   buildGraph () {
     return (
-      <LineChart axes
-        xType={'time'}
-        data={this.formatData(this.props.data)}
-        width={750}
-        height={500}
-        datePattern={'%d/%m %H:%M'}
-      />
+      <div>
+        <LineChart axes
+          dataPoints
+          grid
+          verticalGrid
+          xType={'time'}
+          data={this.formatData(this.props.data)}
+          width={750}
+          height={500}
+          datePattern={'%d/%m %H:%M'}
+          tickTimeDisplayFormat={'%d/%m %H:%M'}
+          mouseOverHandler={this.mouseOverHandler}
+          mouseOutHandler={this.mouseOutHandler}
+        />
+        {this.createTooltip()}
+      </div>
     )
+  }
+
+  createTooltip () {
+    if (this.state.tooltip.show) {
+      return (
+        <ToolTip top={this.state.tooltip.top} left={this.state.tooltip.left}>
+          Costed ${this.state.tooltip.y} at {this.state.tooltip.x}
+        </ToolTip>
+      )
+    }
+  }
+
+  mouseOverHandler (d, e) {
+    console.log('x: ' + e.clientX + ', y: ' + e.clientY)
+    this.setState({
+      tooltip: {
+        show: true,
+        top: e.clientY,
+        left: e.clientX,
+        x: d.x,
+        y: d.y
+      }
+    })
+  }
+
+  mouseOutHandler () {
+    this.setState({
+      tooltip: {
+        show: false
+      }
+    })
   }
 
   formatData (rawData) {
