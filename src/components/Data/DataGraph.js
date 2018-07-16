@@ -34,21 +34,22 @@ class DataGraph extends React.Component {
       : this.props.isGettingData || this.props.data.length === 0 ? (<h3>Waiting for the data</h3>)
         : this.props.sourcesFailure ? (<h3>Failed to get sources</h3>)
           : this.props.dataFailure ? (<h3>Failed to get data</h3>)
-            : this.props.selectedSources.length === 0 ? (<h3>No sources selected</h3>)
+            : this.props.colors.length === 0 ? (<h3>No sources selected</h3>)
               : this.buildGraph()
   }
 
   buildGraph () {
     return (
-      <div>
+      <div className="graph-container">
         <LineChart axes
           dataPoints
           grid
           verticalGrid
+          lineColors={this.props.colors}
           xType={'time'}
           data={this.formatData(this.props.data)}
-          width={750}
-          height={500}
+          width={this.state.width * 0.75}
+          height={this.state.height * 0.8}
           datePattern={'%d/%m %H:%M'}
           tickTimeDisplayFormat={'%d/%m %H:%M'}
           mouseOverHandler={this.mouseOverHandler}
@@ -70,7 +71,10 @@ class DataGraph extends React.Component {
   }
 
   mouseOverHandler (d, e) {
-    console.log('x: ' + e.clientX + ', y: ' + e.clientY)
+    if (Math.abs(e.clientX - this.state.left) < 10 &&
+      Math.abs(e.clientY - this.state.top) < 10) {
+      return true
+    }
     this.setState({
       tooltip: {
         show: true,
@@ -118,7 +122,7 @@ DataGraph.propTypes = {
   isGettingData: PropTypes.bool.isRequired,
   sourcesFailure: PropTypes.bool.isRequired,
   dataFailure: PropTypes.bool.isRequired,
-  selectedSources: PropTypes.arrayOf(
+  colors: PropTypes.arrayOf(
     PropTypes.string
   ).isRequired,
   data: PropTypes.arrayOf(

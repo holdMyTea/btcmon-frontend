@@ -5,6 +5,8 @@ import {
   GET_SOURCES_FAILURE
 } from '../actions/sources'
 
+import colors from '../misc/sourcesColors.json'
+
 export default function (
   state = {
     isGettingSources: false,
@@ -24,7 +26,8 @@ export default function (
         sources.push({
           id: i,
           name: action.payload.sources[i],
-          isSelected: true
+          isSelected: true,
+          color: colors[i]
         })
       }
 

@@ -1,0 +1,16 @@
+.sources-list {
+  padding: 15px;
+  margin: 0;
+}
+
+.selected-source {
+  font-family: $font;
+  padding: 5px;
+}
+.deselected-source {
+  background: $secondary_color;
+  color: lightgray;
+  text-decoration: line-through;
+  font-family: $font;
+  padding: 5px;
+}

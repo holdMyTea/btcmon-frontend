@@ -17,7 +17,7 @@ class Data extends React.Component {
         isGettingData={this.props.isGettingData}
         sourcesFailure={this.props.sourcesFailure}
         dataFailure={this.props.dataFailure}
-        selectedSources={this.props.selectedSources}
+        colors={this.props.selectedSources.map(source => source.color)}
         data={this.props.data} />
     )
   }
@@ -26,13 +26,13 @@ class Data extends React.Component {
     if (
       !(
         (this.props.isGettingData || this.props.isGettingSources) ||
-        (this.props.selectedSources === 0) ||
+        (this.props.selectedSources.length === 0) ||
         (
           (this.props.startDate === this.props.dataActualFor.startDate) &&
           (this.props.endDate === this.props.dataActualFor.endDate) &&
           (
             this.props.selectedSources.every(
-              source => this.props.dataActualFor.sources.includes(source)
+              source => this.props.dataActualFor.sources.includes(source.name)
             )
           )
         )
@@ -50,7 +50,7 @@ class Data extends React.Component {
 const mapStateToProps = state => {
   const selectedSources = state.sources.list.filter(
     source => source.isSelected
-  ).map(source => source.name)
+  ).map(source => ({name: source.name, color: source.color}))
 
   return {
     isGettingSources: state.sources.isGettingSources,
@@ -59,7 +59,7 @@ const mapStateToProps = state => {
     dataFailure: state.data.dataFailure,
     dataActualFor: state.data.actualFor,
     data: state.data.list.filter(dataset =>
-      selectedSources.includes(dataset.name)
+      selectedSources.map(source => source.name).includes(dataset.name)
     ),
     startDate: state.dates.startDate,
     endDate: state.dates.endDate,
@@ -70,7 +70,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onDataUpdate: (startDate, endDate, sources) => dispatch(
-      getData(startDate, endDate, sources)
+      getData(startDate, endDate, sources.map(source => source.name))
     )
   }
 }
@@ -83,7 +83,10 @@ Data.propTypes = {
   startDate: PropTypes.string.isRequired,
   endDate: PropTypes.string.isRequired,
   selectedSources: PropTypes.arrayOf(
-    PropTypes.string
+    PropTypes.shape({
+      name: PropTypes.string,
+      color: PropTypes.string
+    })
   ).isRequired,
   data: PropTypes.arrayOf(
     PropTypes.shape({

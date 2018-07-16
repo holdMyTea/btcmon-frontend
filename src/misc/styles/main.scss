@@ -3,7 +3,12 @@
 }
 
 $main_color: rebeccapurple;
-$secondary_color: white;
+$secondary_color: whitesmoke;
+$font: Verdana, Geneva, sans-serif;
+
+@import 'dates'; 
+@import 'sources'; 
+@import 'data'; 
 
 header {
   margin: 10px;
@@ -33,32 +38,6 @@ header {
   @extend %column;
   flex: 4 1 80%;
   margin-left: 5px;
-}
-
-.dates {
-  .dates-header {
-    margin-bottom: 4px;
-  }
-}
-
-.sources {
-  .sources-list {
-    padding: 15px;
-    margin: 0;
-    .selected-source {
-      color: black;
-    }
-    .deselected-source {
-      color: lightgray;
-      text-decoration: line-through;
-    }
-  }
-}
-
-.tooltip {
-  position: fixed;
-  padding: 10px;
-  background: whitesmoke;
 }
 
 footer {

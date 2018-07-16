@@ -10,6 +10,7 @@ const SourceList = ({ list, onSourceClick, isGettingSources, sourcesFailure }) =
             <li key={source.id}
               onClick={() => onSourceClick(source.id)}
               className={source.isSelected ? ['selected-source'] : ['deselected-source']}
+              style={source.isSelected ? {color: 'white', background: source.color} : {}}
             >{source.name}</li>
           ))}
         </ul>) : (<h3>No sources yet</h3>)

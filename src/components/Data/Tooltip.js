@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const ToolTip = (props) => (
-  <div className="tooltip" style={{position: 'fixed', top: props.top, left: props.left}}>
+  <div className="tooltip" style={{top: props.top, left: props.left}}>
     {props.children}
   </div>
 )

@@ -7,7 +7,7 @@ import { createLogger } from 'redux-logger'
 
 import reducers from './reducers'
 import App from './components/App.js'
-import './style.scss'
+import './misc/styles/main.scss'
 
 const loggerMiddleware = createLogger()
 
