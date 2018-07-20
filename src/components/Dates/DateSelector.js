@@ -15,16 +15,15 @@ const DateSelector = ({ date, onDateChange }) => {
     : moment.months().slice(0, now.month() + 1)
 
   const days = selected.isBefore(now, 'month')
-    ? Array(selected.clone().endOf('month').date()).fill().map((v, i) => String(i + 1)) // that clone() was painfull to figure out
+    ? Array(selected.clone().endOf('month').date()).fill().map((v, i) => String(i + 1))
     : Array(now.date()).fill().map((v, i) => String(i + 1))
 
   return (
-    <div className='date-selector'>
+    <div className='select-block'>
       <DateElement options={months} current={moment.months()[selected.month()]}
         onChange={onChange('month', selected, onDateChange)}/>
 
-      <DateElement options={days}
-        current={String(selected.date())}
+      <DateElement options={days} current={String(selected.date())}
         onChange={onChange('date', selected, onDateChange)} />
 
       <DateElement options={years} current={String(selected.year())}

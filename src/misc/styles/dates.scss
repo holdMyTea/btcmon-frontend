@@ -1,4 +1,40 @@
+.dates {
+  padding: 15px;
+}
+
+.select-block {
+  display: flex;
+  flex-flow: row nowrap;
+
+  .select-container {
+    position: relative;
+    flex: 1 1 33%;
+    overflow: hidden;
+    background-color:  $secondary_color;
+  
+    select {
+      width: 100%;
+      background: transparent;
+      border-color:  $main_color;
+      border-width: 2px 2px;
+      padding: 5px;
+      color: $main_color;
+      font-family: $font;
+      font-size: 12pt;
+    }
+  }
+
+  .select-container:nth-of-type(2) {
+    select{
+      border-width: 2px 0px;
+    }
+  }
+}
+
 .dates-header {
   margin-bottom: 4px;
-  font: $font;
+  font-family: $font;
+  font-size: 12pt;
+  color: $main_color;
+  padding-left: 10px;
 }

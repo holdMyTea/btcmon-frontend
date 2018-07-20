@@ -5,15 +5,20 @@
 $main_color: rebeccapurple;
 $secondary_color: whitesmoke;
 $font: Verdana, Geneva, sans-serif;
+$font-size: 14pt;
 
 @import 'dates'; 
 @import 'sources'; 
 @import 'data'; 
 
 header {
-  margin: 10px;
-  padding-left: 10%;
+  text-align: center;
   color: $main_color;
+  font-size: 16pt;
+
+  h2 {
+    margin: 15px;
+  }
 }
 
 .app {
