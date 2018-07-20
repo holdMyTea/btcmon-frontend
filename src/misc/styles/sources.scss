@@ -1,16 +1,17 @@
 .sources-list {
   padding: 15px;
   margin: 0;
+  list-style-type: none;
 }
 
 .selected-source {
   font-family: $font;
-  padding: 5px;
+  padding: 7px 5px 7px 5px;
+  text-align: center;
 }
 .deselected-source {
+  @extend .selected-source;
   background: $secondary_color;
   color: lightgray;
   text-decoration: line-through;
-  font-family: $font;
-  padding: 5px;
 }
