@@ -31,7 +31,7 @@ export default function (
       }
 
     case GET_DATA_FAILURE:
-      return {...state, sourcesFailure: true}
+      return {...state, dataFailure: true, isGettingData: false}
 
     default: return state
   }
